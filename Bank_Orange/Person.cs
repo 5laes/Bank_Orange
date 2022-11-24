@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Bank_Orange
 {
-    class UserAccount
+    class Person
     {
     }
 }

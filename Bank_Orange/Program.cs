@@ -9,7 +9,7 @@ namespace Bank_Orange
             
         }
 
-        public void StartProgram()
+        public static void LoadProgram()
         {
 
         }

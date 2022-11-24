@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Bank_Orange
 {
-    class BankAccount
+    class Customer
     {
-        private List<AccountDetails> BankAccountList = new List<AccountDetails>();
     }
 }
