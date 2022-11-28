@@ -14,7 +14,18 @@ namespace Bank_Orange
             foreach (var AccountDetails in BankAccountList)
             {
                 Console.WriteLine($"{AccountDetails.AccountName}: {AccountDetails.Money}kr ");
-            }           
+            }
+            Console.ReadLine();
+        }
+
+        public void AddNewBankAccount()
+        {
+            Console.Write("Name account: ");
+            string accountName = Console.ReadLine();
+            Console.Write("Money to deposit: ");
+            decimal.TryParse(Console.ReadLine(), out decimal money);
+            AccountDetails newAccount = new AccountDetails(accountName, money);
+            BankAccountList.Add(newAccount);
         }
     }
 }

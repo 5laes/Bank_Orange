@@ -58,7 +58,7 @@ namespace Bank_Orange
             AccountDictionary.Add(AccountDictionary.Count, newBankAccount);
         }
 
-        //Creates a customer profile with input from the customer
+        //Creates a customer profile with input from the admin
         public void CreateUserAccount()
         {
             Console.Clear();
@@ -86,10 +86,13 @@ namespace Bank_Orange
             switch (choice)
             {
                 case 1:
+                    AddNewBankAccount();
                     break;
                 case 2:
+                    DisplayAccountInfo();
                     break;
                 case 3:
+                    Login();
                     break;
                 default:
                     CustomerMenu();
@@ -100,26 +103,46 @@ namespace Bank_Orange
         public void AdminMenu()
         {
             Console.Clear();
-            Console.Write("\n\t[1]Add new bank account" +
-                "\n\t[2]Show accounts" +
-                "\n\t[3]Create account" +
-                "\n\t[4]Logout" +
+            Console.Write("\n\t[1]Create account" +
+                "\n\t[2]Logout" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
             {
                 case 1:
+                    CreateUserAccount();
                     break;
                 case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
+                    Login();
                     break;
                 default:
-                    CustomerMenu();
+                    AdminMenu();
                     break;
             }
+        }
+
+        public void DisplayAccountInfo()
+        {
+            foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
+            {
+                if (item.Key == InLoggedUserIndex)
+                {
+                    item.Value.DisplayAccountInfo();
+                }
+            }
+            CustomerMenu();
+        }
+
+        public void AddNewBankAccount()
+        {
+            foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
+            {
+                if (item.Key == InLoggedUserIndex)
+                {
+                    item.Value.AddNewBankAccount();
+                }
+            }
+            CustomerMenu();
         }
     }
 }
