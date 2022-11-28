@@ -8,4 +8,14 @@ namespace Bank_Orange
     {
         private List<AccountDetails> BankAccountList = new List<AccountDetails>();
     }
+
+
+    public void DisplayAccountInfo()
+    {
+        Console.Clear();
+        foreach (var AccountDetails in BankAccountList)
+	{
+            Console.WriteLine($"{item.AccountName}: {item.Money}kr ");
+	}
+    }
 }
