@@ -28,6 +28,7 @@ namespace Bank_Orange
                     {
                         if (item.Value.Name == Name && item.Value.Password == Password)
                         {
+                            InLoggedUserIndex = item.Key;
                             if (item.Value.IsAdmin == true)
                             {
                                 AdminMenu();
