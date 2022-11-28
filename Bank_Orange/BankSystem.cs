@@ -18,7 +18,27 @@ namespace Bank_Orange
             {
                 if (Attempts < 3)
                 {
+                    Console.Clear();
+                    Console.Write("Enter Your Username: ");
+                    String Name = Console.ReadLine();
+                    Console.Write("\nEnter Your Password: ");
+                    String Password = Console.ReadLine();
 
+                    foreach (KeyValuePair<int, Person> item in PersonDictionary)
+                    {
+                        if (item.Value.Name == Name && item.Value.Password == Password)
+                        {
+                            if (item.Value.IsAdmin == true)
+                            {
+                                AdminMenu();
+                            }
+                            else
+                            {
+                                CustomerMenu();
+                            }
+                        }
+
+                    }
                 }
                 else
                 {
