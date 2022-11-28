@@ -4,7 +4,13 @@ using System.Text;
 
 namespace Bank_Orange
 {
-    class Admin
+    class Admin : Person
     {
+        public Admin()
+        {
+            Name = "ADMIN";
+            Password = "ADMIN";
+            IsAdmin = true;
+        }
     }
 }

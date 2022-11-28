@@ -4,7 +4,13 @@ using System.Text;
 
 namespace Bank_Orange
 {
-    class Customer
+    class Customer : Person
     {
+        public Customer(string name, string password)
+        {
+            Name = name;
+            Password = password;
+            IsAdmin = false;
+        }
     }
 }
