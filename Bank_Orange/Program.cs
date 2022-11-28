@@ -6,7 +6,6 @@ namespace Bank_Orange
     {
         static void Main(string[] args)
         {
-            
         }
 
         public static void LoadProgram()
