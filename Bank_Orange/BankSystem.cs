@@ -49,8 +49,56 @@ namespace Bank_Orange
             PersonDictionary.Add(PersonDictionary.Count, newCustomer);
             BankAccount newBankAccount = new BankAccount();
             AccountDictionary.Add(AccountDictionary.Count, newBankAccount);
-            //create a method that shows the admin menu
-            //AdminMenu();
+            AdminMenu();
+        }
+
+
+        //Menyn som visas när man är inloggad
+        public void CustomerMenu()
+        {
+            Console.Clear();
+            Console.Write("\n\t[1]Add new bank account" +
+                "\n\t[2]Show accounts" +
+                "\n\t[3]Logout" +
+                "\n\t: ");
+            int.TryParse(Console.ReadLine(), out int choice);
+            switch (choice)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    CustomerMenu();
+                    break;
+            }
+        }
+
+        public void AdminMenu()
+        {
+            Console.Clear();
+            Console.Write("\n\t[1]Add new bank account" +
+                "\n\t[2]Show accounts" +
+                "\n\t[3]Create account" +
+                "\n\t[4]Logout" +
+                "\n\t: ");
+            int.TryParse(Console.ReadLine(), out int choice);
+            switch (choice)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    CustomerMenu();
+                    break;
+            }
         }
     }
 }
