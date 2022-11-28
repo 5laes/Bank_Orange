@@ -20,9 +20,9 @@ namespace Bank_Orange
                 {
                     Console.Clear();
                     Console.Write("Enter Your Username: ");
-                    String Name = Console.ReadLine();
+                    string Name = Console.ReadLine();
                     Console.Write("\nEnter Your Password: ");
-                    String Password = Console.ReadLine();
+                    string Password = Console.ReadLine();
 
                     foreach (KeyValuePair<int, Person> item in PersonDictionary)
                     {

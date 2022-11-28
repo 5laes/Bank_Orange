@@ -6,11 +6,14 @@ namespace Bank_Orange
     {
         static void Main(string[] args)
         {
+            LoadProgram();
         }
 
         public static void LoadProgram()
         {
-
+            BankSystem bankSystem = new BankSystem();
+            bankSystem.CreateAdmin();
+            bankSystem.Login();
         }
     }
 }
