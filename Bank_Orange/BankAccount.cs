@@ -22,7 +22,7 @@ namespace Bank_Orange
                 if (AccountDetails.CurrencyPosition == false)
                 {
                     Console.Write($"\n\t[{accountIndex}]{AccountDetails.AccountName}: " +
-                        $"{AccountDetails.CurrencyType}{Math.Round(AccountDetails.Money, 2)} ");
+                        $"{AccountDetails.CurrencyType}{AccountDetails.Money.ToString("0.00")} ");
                 }
                 else 
                 {
