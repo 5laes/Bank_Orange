@@ -20,10 +20,28 @@ namespace Bank_Orange
             set { money = value; }
         }
 
-        public AccountDetails(string accountName, decimal money)
+        private string currencyType;
+        public string CurrencyType
+        {
+            get { return currencyType; }
+            set { currencyType = value; }
+        }
+
+        private bool currencyPosition;
+        public bool CurrencyPosition
+        {
+            get { return currencyPosition; }
+            set { currencyPosition = value; }
+        }
+
+        public AccountDetails(string accountName, decimal money, string currency, bool currencyPosition)
         {
             AccountName = accountName;
             Money = money;
+            CurrencyType = currency;
+            CurrencyPosition = currencyPosition;
         }     
+
+        
     }
 }
