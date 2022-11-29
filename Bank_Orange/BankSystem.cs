@@ -8,6 +8,7 @@ namespace Bank_Orange
     class BankSystem
     {
         int InLoggedUserIndex;
+        BankAccount InLoggedUserAccount;
 
         private Dictionary<int, Person> PersonDictionary = new Dictionary<int, Person>();
         private Dictionary<int, BankAccount> AccountDictionary = new Dictionary<int, BankAccount>();
@@ -19,9 +20,9 @@ namespace Bank_Orange
                 if (Attempts < 3)
                 {
                     Console.Clear();
-                    Console.Write("Enter Your Username: ");
+                    Console.Write("\n\tEnter Your Username: ");
                     string Name = Console.ReadLine();
-                    Console.Write("\nEnter Your Password: ");
+                    Console.Write("\n\tEnter Your Password: ");
                     string Password = Console.ReadLine();
 
                     foreach (KeyValuePair<int, Person> item in PersonDictionary)
@@ -29,6 +30,7 @@ namespace Bank_Orange
                         if (item.Value.Name == Name && item.Value.Password == Password)
                         {
                             InLoggedUserIndex = item.Key;
+                            GetUserAccount();
                             if (item.Value.IsAdmin == true)
                             {
                                 AdminMenu();
@@ -38,12 +40,22 @@ namespace Bank_Orange
                                 CustomerMenu();
                             }
                         }
-
                     }
                 }
                 else
                 {
                     Environment.Exit(0);
+                }
+            }
+        }
+
+        public void GetUserAccount()
+        {
+            foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
+            {
+                if (item.Key == InLoggedUserIndex)
+                {
+                    InLoggedUserAccount = item.Value;
                 }
             }
         }
@@ -80,18 +92,27 @@ namespace Bank_Orange
             Console.Clear();
             Console.Write("\n\t[1]Add new bank account" +
                 "\n\t[2]Show accounts" +
-                "\n\t[3]Logout" +
+                "\n\t[3]Move money" +
+                "\n\t[4]Logout" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
             {
                 case 1:
-                    AddNewBankAccount();
+                    InLoggedUserAccount.AddNewBankAccount();
+                    CustomerMenu();
                     break;
                 case 2:
-                    DisplayAccountInfo();
+                    InLoggedUserAccount.DisplayAccountInfo();
+                    Console.ReadLine();
+                    CustomerMenu();
                     break;
                 case 3:
+                    InLoggedUserAccount.DisplayAccountInfo();
+                    InLoggedUserAccount.TransfereMoneyinUser();
+                    CustomerMenu();
+                    break;
+                case 4:
                     Login();
                     break;
                 default:
@@ -119,30 +140,6 @@ namespace Bank_Orange
                     AdminMenu();
                     break;
             }
-        }
-
-        public void DisplayAccountInfo()
-        {
-            foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
-            {
-                if (item.Key == InLoggedUserIndex)
-                {
-                    item.Value.DisplayAccountInfo();
-                }
-            }
-            CustomerMenu();
-        }
-
-        public void AddNewBankAccount()
-        {
-            foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
-            {
-                if (item.Key == InLoggedUserIndex)
-                {
-                    item.Value.AddNewBankAccount();
-                }
-            }
-            CustomerMenu();
         }
     }
 }
