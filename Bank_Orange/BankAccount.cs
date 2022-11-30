@@ -8,10 +8,11 @@ namespace Bank_Orange
 {
     class BankAccount
     {
+        //For saving the exchangerate
+        CurrencyExchanges currencyExchanges;
+
         //A list of account details.
         private List<AccountDetails> BankAccountList = new List<AccountDetails>();
-        public decimal SekMultiplierFromEuro;
-        public decimal SekMultiplierFromDollar;
 
         //Displays all the accounts that a user has and the information in them.
         public void DisplayAccountInfo()
@@ -36,11 +37,16 @@ namespace Bank_Orange
             }
         }
 
+        //Gets the current currencyExchange
+        public void GetCurrencyExchanges(CurrencyExchanges newCurrencyExchanges)
+        {
+            currencyExchanges = newCurrencyExchanges;
+        }
+
         //Creates a new account with specific name and currency.
         public void AddNewBankAccount()
         {
             Console.Clear();
-            UpdateCurrencyRate();
             bool currencyPosition;
 
             Console.Write("\n\tName account: ");
@@ -80,24 +86,17 @@ namespace Bank_Orange
             AccountDetails newAccount = new AccountDetails(accountName, money, currency, currencyPosition);
             BankAccountList.Add(newAccount);
         }
-        public void UpdateCurrencyRate()
-        {
-            BankSystem bankSystem = new BankSystem();
-            SekMultiplierFromEuro = bankSystem.SekMultiplierFromEuro;
-            SekMultiplierFromDollar = bankSystem.SekMultiplierFromDollar;
-        }
 
         //Converts currencies from sek to dollar/euro when a account is created.
         public decimal CurrencyConvertFromSek(string currency, decimal money)
         {
-            UpdateCurrencyRate();
             if (currency == "$")
             {
-                return money /= SekMultiplierFromDollar;
+                return money /= currencyExchanges.SekMultiplierFromDollar;
             }
             if (currency == "€")
             {
-                return money /= SekMultiplierFromEuro;
+                return money /= currencyExchanges.SekMultiplierFromEuro;
             }
             return money;
         }
@@ -105,32 +104,31 @@ namespace Bank_Orange
         //Converts currencies when transferen money between accounts
         public decimal CurrencyConverter(string currencyFrom,string currencyTo, decimal money)
         {
-            UpdateCurrencyRate();
             if (currencyFrom == "$" && currencyTo == "€")
             {
-                money *= SekMultiplierFromDollar;
-                return money /= SekMultiplierFromEuro;
+                money *= currencyExchanges.SekMultiplierFromDollar;
+                return money /= currencyExchanges.SekMultiplierFromEuro;
             }
             if (currencyFrom == "€" && currencyTo == "$")
             {
-                money *= SekMultiplierFromEuro;
-                return money /= SekMultiplierFromDollar;
+                money *= currencyExchanges.SekMultiplierFromEuro;
+                return money /= currencyExchanges.SekMultiplierFromDollar;
             }
             if (currencyFrom == "Kr" && currencyTo == "€")
             {
-                return money /= SekMultiplierFromEuro;
+                return money /= currencyExchanges.SekMultiplierFromEuro;
             }
             if (currencyFrom == "Kr" && currencyTo == "$")
             {
-                return money /= SekMultiplierFromDollar;
+                return money /= currencyExchanges.SekMultiplierFromDollar;
             }
             if (currencyFrom == "€" && currencyTo == "Kr")
             {
-                return money *= SekMultiplierFromEuro;
+                return money *= currencyExchanges.SekMultiplierFromEuro;
             }
             if (currencyFrom == "$" && currencyTo == "Kr")
             {
-                return money *= SekMultiplierFromDollar;
+                return money *= currencyExchanges.SekMultiplierFromDollar;
             }
             return money;
         }

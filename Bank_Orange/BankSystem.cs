@@ -7,8 +7,8 @@ namespace Bank_Orange
 {
     class BankSystem
     {
-        public decimal SekMultiplierFromEuro;
-        public decimal SekMultiplierFromDollar;
+        //For saving the exchangerate
+        CurrencyExchanges currencyExchanges;
 
         //For saving the users index.
         int InLoggedUserIndex;
@@ -19,6 +19,12 @@ namespace Bank_Orange
         //Dictionaries of users and users accounts where the key keeps them together.
         private Dictionary<int, Person> PersonDictionary = new Dictionary<int, Person>();
         private Dictionary<int, BankAccount> AccountDictionary = new Dictionary<int, BankAccount>();
+
+        //Gets the current currencyExchange
+        public void GetCurrencyExchanges(CurrencyExchanges newCurrencyExchanges)
+        {
+            currencyExchanges = newCurrencyExchanges;
+        }
 
         //Login method thats saves the users index if a loggin is successfull.
         public void Login()
@@ -102,22 +108,25 @@ namespace Bank_Orange
             PersonDictionary.Add(PersonDictionary.Count, newCustomer);
 
             BankAccount newBankAccount = new BankAccount();
+            newBankAccount.GetCurrencyExchanges(currencyExchanges);
             AccountDictionary.Add(AccountDictionary.Count, newBankAccount);
 
             AdminMenu();
         }
+
+        //Method for admin to uppdate the exchange rate of dollar and euro
         public void ChangeExchageRate()
         {
-            Console.Write("\n\tCurrent exchange rate:" +
-                $" Euro {SekMultiplierFromEuro} Dollar {SekMultiplierFromDollar}");
+            Console.Write("\n\tCurrent exchange rate: " +
+                $"Euro {currencyExchanges.SekMultiplierFromEuro} Dollar {currencyExchanges.SekMultiplierFromDollar}");
 
             Console.Write("\n\tWhats todays exchage rate for Dollar: ");
             decimal.TryParse(Console.ReadLine(), out decimal RateDollar);
-            SekMultiplierFromDollar = RateDollar;
+            currencyExchanges.SekMultiplierFromDollar = RateDollar;
 
             Console.Write("\n\tWhats todays exchage rate for Euro: ");
             decimal.TryParse(Console.ReadLine(), out decimal RateEuro);
-            SekMultiplierFromEuro = RateEuro;
+            currencyExchanges.SekMultiplierFromEuro = RateEuro;
             AdminMenu();
         }
 
