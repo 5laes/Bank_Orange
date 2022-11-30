@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Bank_Orange
 {
@@ -9,8 +10,8 @@ namespace Bank_Orange
     {
         //A list of account details.
         private List<AccountDetails> BankAccountList = new List<AccountDetails>();
-        private decimal SekMultiplierFromEuro = 10.9m;
-        private decimal SekMultiplierFromDollar = 10.5m;
+        public decimal SekMultiplierFromEuro;
+        public decimal SekMultiplierFromDollar;
 
         //Displays all the accounts that a user has and the information in them.
         public void DisplayAccountInfo()
@@ -39,6 +40,7 @@ namespace Bank_Orange
         public void AddNewBankAccount()
         {
             Console.Clear();
+            UpdateCurrencyRate();
             bool currencyPosition;
 
             Console.Write("\n\tName account: ");
@@ -78,10 +80,17 @@ namespace Bank_Orange
             AccountDetails newAccount = new AccountDetails(accountName, money, currency, currencyPosition);
             BankAccountList.Add(newAccount);
         }
+        public void UpdateCurrencyRate()
+        {
+            BankSystem bankSystem = new BankSystem();
+            SekMultiplierFromEuro = bankSystem.SekMultiplierFromEuro;
+            SekMultiplierFromDollar = bankSystem.SekMultiplierFromDollar;
+        }
 
         //Converts currencies from sek to dollar/euro when a account is created.
         public decimal CurrencyConvertFromSek(string currency, decimal money)
         {
+            UpdateCurrencyRate();
             if (currency == "$")
             {
                 return money /= SekMultiplierFromDollar;
@@ -96,6 +105,7 @@ namespace Bank_Orange
         //Converts currencies when transferen money between accounts
         public decimal CurrencyConverter(string currencyFrom,string currencyTo, decimal money)
         {
+            UpdateCurrencyRate();
             if (currencyFrom == "$" && currencyTo == "€")
             {
                 money *= SekMultiplierFromDollar;

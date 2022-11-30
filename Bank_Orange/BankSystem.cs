@@ -7,6 +7,9 @@ namespace Bank_Orange
 {
     class BankSystem
     {
+        public decimal SekMultiplierFromEuro;
+        public decimal SekMultiplierFromDollar;
+
         //For saving the users index.
         int InLoggedUserIndex;
 
@@ -103,6 +106,20 @@ namespace Bank_Orange
 
             AdminMenu();
         }
+        public void ChangeExchageRate()
+        {
+            Console.Write("\n\tCurrent exchange rate:" +
+                $" Euro {SekMultiplierFromEuro} Dollar {SekMultiplierFromDollar}");
+
+            Console.Write("\n\tWhats todays exchage rate for Dollar: ");
+            decimal.TryParse(Console.ReadLine(), out decimal RateDollar);
+            SekMultiplierFromDollar = RateDollar;
+
+            Console.Write("\n\tWhats todays exchage rate for Euro: ");
+            decimal.TryParse(Console.ReadLine(), out decimal RateEuro);
+            SekMultiplierFromEuro = RateEuro;
+            AdminMenu();
+        }
 
         //Menu for customer users.
         public void CustomerMenu()
@@ -144,7 +161,8 @@ namespace Bank_Orange
         {
             Console.Clear();
             Console.Write("\n\t[1]Create account" +
-                "\n\t[2]Logout" +
+                "\n\t[2]Change currency rate" +
+                "\n\t[3]Logout" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
@@ -153,6 +171,9 @@ namespace Bank_Orange
                     CreateUserAccount();
                     break;
                 case 2:
+                    ChangeExchageRate();
+                    break;
+                case 3:
                     Login();
                     break;
                 default:
