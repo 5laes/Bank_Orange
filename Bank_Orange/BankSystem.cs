@@ -7,12 +7,17 @@ namespace Bank_Orange
 {
     class BankSystem
     {
+        //For saving the users index.
         int InLoggedUserIndex;
+
+        //For saving the users account.
         BankAccount InLoggedUserAccount;
 
+        //Dictionaries of users and users accounts where the key keeps them together.
         private Dictionary<int, Person> PersonDictionary = new Dictionary<int, Person>();
         private Dictionary<int, BankAccount> AccountDictionary = new Dictionary<int, BankAccount>();
 
+        //Login method thats saves the users index if a loggin is successfull.
         public void Login()
         {
             for (int Attempts = 0; Attempts <= 3; Attempts++)
@@ -20,14 +25,17 @@ namespace Bank_Orange
                 if (Attempts < 3)
                 {
                     Console.Clear();
+
                     Console.Write("\n\tEnter Your Username: ");
                     string Name = Console.ReadLine();
+
                     Console.Write("\n\tEnter Your Password: ");
                     string Password = Console.ReadLine();
 
                     foreach (KeyValuePair<int, Person> item in PersonDictionary)
                     {
-                        if (item.Value.Name == Name && item.Value.Password == Password)
+                        //checks if the username and password exists and match the database
+                        if (item.Value.UserName == Name && item.Value.Password == Password)
                         {
                             InLoggedUserIndex = item.Key;
                             GetUserAccount();
@@ -49,6 +57,8 @@ namespace Bank_Orange
             }
         }
 
+        //Gets the inlogged users account from the accountdictionary
+        //and assigns the empty bankaccount object to it.
         public void GetUserAccount()
         {
             foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
@@ -60,33 +70,41 @@ namespace Bank_Orange
             }
         }
 
-        //Creates a admin profile 
-        //Call this method when the program starts
+        //Creates a admin profile. 
+        //Call this method when the program starts.
         public void CreateAdmin()
         {
             Admin admin = new Admin();
             PersonDictionary.Add(PersonDictionary.Count, admin);
+
+            //creates a bankaccount and adds it to the dictionary even though
+            //the admin can never access it just to make the keys in the two
+            //dictionaries match
             BankAccount newBankAccount = new BankAccount();
             AccountDictionary.Add(AccountDictionary.Count, newBankAccount);
         }
 
-        //Creates a customer profile with input from the admin
+        //Creates a customer profile with input from the admin.
         public void CreateUserAccount()
         {
             Console.Clear();
+
             Console.Write("\n\tName: ");
             string name = Console.ReadLine();
+
             Console.Write("\n\tPassword: ");
             string password = Console.ReadLine();
+
             Customer newCustomer = new Customer(name, password);
             PersonDictionary.Add(PersonDictionary.Count, newCustomer);
+
             BankAccount newBankAccount = new BankAccount();
             AccountDictionary.Add(AccountDictionary.Count, newBankAccount);
+
             AdminMenu();
         }
 
-
-        //Menyn som visas när man är inloggad
+        //Menu for customer users.
         public void CustomerMenu()
         {
             Console.Clear();
@@ -121,6 +139,7 @@ namespace Bank_Orange
             }
         }
 
+        //Menu for admin users.
         public void AdminMenu()
         {
             Console.Clear();

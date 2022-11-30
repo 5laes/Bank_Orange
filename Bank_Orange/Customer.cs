@@ -4,11 +4,12 @@ using System.Text;
 
 namespace Bank_Orange
 {
+    //Class for creating a customer.
     class Customer : Person
     {
         public Customer(string name, string password)
         {
-            Name = name;
+            UserName = name;
             Password = password;
             IsAdmin = false;
         }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Bank_Orange
 {
+    //A class fo account details such as name, currencytype ammount of money in account.
     class AccountDetails
     {
         private string accountName;
@@ -40,8 +41,6 @@ namespace Bank_Orange
             Money = money;
             CurrencyType = currency;
             CurrencyPosition = currencyPosition;
-        }     
-
-        
+        }             
     }
 }

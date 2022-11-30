@@ -4,13 +4,14 @@ using System.Text;
 
 namespace Bank_Orange
 {
+    //Base class for any kind of user.
     class Person
     {
-        private string name;
-        public string Name 
+        private string userName;
+        public string UserName 
         { 
-            get { return name; } 
-            set { name = value; }
+            get { return userName; } 
+            set { userName = value; }
         }
 
         private string password;
