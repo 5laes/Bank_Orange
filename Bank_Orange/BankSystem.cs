@@ -188,7 +188,18 @@ namespace Bank_Orange
                 default:
                     AdminMenu();
                     break;
-            }
+            }          
+        }
+        public void DefaultUser()
+        {
+            string name = "user";
+            string password = "password";
+            Customer newCustomer = new Customer(name, password);
+            PersonDictionary.Add(PersonDictionary.Count, newCustomer);
+            BankAccount newBankAccount = new BankAccount();
+            newBankAccount.GetCurrencyExchanges(currencyExchanges);
+            AccountDictionary.Add(AccountDictionary.Count, newBankAccount);           
         }
     }
+
 }
