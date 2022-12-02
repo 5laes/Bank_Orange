@@ -12,7 +12,6 @@ namespace Bank_Orange
         public static void LoadProgram()
         {           
             BankSystem bankSystem = new BankSystem();
-            bankSystem.DefaultUser();
             CurrencyExchanges currencyExchanges = new CurrencyExchanges(10, 10);
             bankSystem.CreateAdmin();
             bankSystem.GetCurrencyExchanges(currencyExchanges);

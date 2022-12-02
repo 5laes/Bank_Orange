@@ -134,10 +134,12 @@ namespace Bank_Orange
         public void CustomerMenu()
         {
             Console.Clear();
+            Console.Write($"\n\tYour index is {InLoggedUserIndex}");
             Console.Write("\n\t[1]Add new bank account" +
                 "\n\t[2]Show accounts" +
                 "\n\t[3]Move money" +
-                "\n\t[4]Logout" +
+                "\n\t[4]Send money" +
+                "\n\t[5]Logout" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
@@ -157,6 +159,9 @@ namespace Bank_Orange
                     CustomerMenu();
                     break;
                 case 4:
+                    TransfereBetweenUsers();
+                    break;
+                case 5:
                     Login();
                     break;
                 default:
@@ -190,16 +195,24 @@ namespace Bank_Orange
                     break;
             }          
         }
-        public void DefaultUser()
+
+        //Method to transfere money between users
+        public void TransfereBetweenUsers()
         {
-            string name = "user";
-            string password = "password";
-            Customer newCustomer = new Customer(name, password);
-            PersonDictionary.Add(PersonDictionary.Count, newCustomer);
-            BankAccount newBankAccount = new BankAccount();
-            newBankAccount.GetCurrencyExchanges(currencyExchanges);
-            AccountDictionary.Add(AccountDictionary.Count, newBankAccount);           
+            BankAccount receiver;
+            Console.Write("\n\tInput recipient ID: ");
+            int.TryParse(Console.ReadLine(), out int idKey);
+            InLoggedUserAccount.DisplayAccountInfo();
+            decimal money = InLoggedUserAccount.SendMoney();
+            foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
+            {
+                if (idKey == item.Key)
+                {
+                    receiver = item.Value;
+                    receiver.RecievMoney(money);
+                }
+            }
+            CustomerMenu();
         }
     }
-
 }
