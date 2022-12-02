@@ -145,11 +145,32 @@ namespace Bank_Orange
 
             AccountDetails withdrawlAccount = BankAccountList.ElementAt(withdrawl - 1);
             AccountDetails depossitAccount = BankAccountList.ElementAt(depossit - 1);
-            withdrawlAccount.Money = withdrawlAccount.Money - money;
+            withdrawlAccount.Money -= money;
 
             money = CurrencyConverter(withdrawlAccount.CurrencyType, depossitAccount.CurrencyType, money);
 
-            depossitAccount.Money = depossitAccount.Money + money;
+            depossitAccount.Money += money;
+        }
+
+        //Method that return the ammount of money a user wants to send to another user
+        public decimal SendMoney()
+        {
+            Console.Write("\n\tWhat account do you want to send from: ");
+            int.TryParse(Console.ReadLine(), out int send);
+            Console.Write("\n\tHow much money do you want to send: ");
+            decimal.TryParse(Console.ReadLine(), out decimal money);
+            AccountDetails sendAccount = BankAccountList.ElementAt(send - 1);
+            sendAccount.Money -= money;
+            money = CurrencyConverter(sendAccount.CurrencyType, "Kr", money);
+            return money;
+        }
+
+        //Method that recieves money from another user
+        public void RecievMoney(decimal money)
+        {
+            AccountDetails recievAccount = BankAccountList.ElementAt(0);
+            money = CurrencyConverter("Kr", recievAccount.CurrencyType, money);
+            recievAccount.Money += money;
         }
     }
 }
