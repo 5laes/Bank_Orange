@@ -136,20 +136,55 @@ namespace Bank_Orange
         //Method to transfere money within a useraccount.
         public void TransfereMoneyinUser()
         {
-            Console.Write("\n\tWhat account do you want to withdrawl from: ");
+            Console.Write("\n\tWhat account do you want to transfer from: ");
             int.TryParse(Console.ReadLine(), out int withdrawl);
-            Console.Write("\n\tHow much money do you want to withdrawl: ");
+
+            Console.Write("\n\tHow much money do you want to transfer: ");
             decimal.TryParse(Console.ReadLine(), out decimal money);
+
             Console.Write("\n\tWhat account do you want to depossit to: ");
             int.TryParse(Console.ReadLine(), out int depossit);
+            
+            AccountDetails withdrawlAccount;
+            AccountDetails depossitAccount;
 
-            AccountDetails withdrawlAccount = BankAccountList.ElementAt(withdrawl - 1);
-            AccountDetails depossitAccount = BankAccountList.ElementAt(depossit - 1);
-            withdrawlAccount.Money -= money;
+            try
+            {
+                withdrawlAccount = BankAccountList.ElementAt(withdrawl - 1);
+                depossitAccount = BankAccountList.ElementAt(depossit - 1);
+             
+                if (money == 0)
+                {
+                    Console.Write("\n\tPlease enter a valid number.");
+                    Console.ReadLine();
+                }
+                else if(money < 0)
+                {
+                    money = 0;
+                    
+                    Console.Write("\n\tCan not send a negative amount.");
+                    Console.ReadLine();
+                }
+                else if (money <= withdrawlAccount.Money)
+                {
+                    withdrawlAccount.Money -= money;
+                    money = CurrencyConverter(withdrawlAccount.CurrencyType, depossitAccount.CurrencyType, money);
+                    depossitAccount.Money += money;
 
-            money = CurrencyConverter(withdrawlAccount.CurrencyType, depossitAccount.CurrencyType, money);
-
-            depossitAccount.Money += money;
+                    Console.Write($"\n\tTransaction has been successful.");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.Write($"\n\tInsufficent funds.");
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception)
+            {
+                Console.Write($"\n\tOne of the accounts you are trying to access does not exist.");
+                Console.ReadKey();
+            }
         }
 
         //Method that return the ammount of money a user wants to send to another user
@@ -157,20 +192,64 @@ namespace Bank_Orange
         {
             Console.Write("\n\tWhat account do you want to send from: ");
             int.TryParse(Console.ReadLine(), out int send);
+
             Console.Write("\n\tHow much money do you want to send: ");
             decimal.TryParse(Console.ReadLine(), out decimal money);
-            AccountDetails sendAccount = BankAccountList.ElementAt(send - 1);
-            sendAccount.Money -= money;
-            money = CurrencyConverter(sendAccount.CurrencyType, "Kr", money);
+
+            AccountDetails sendAccount;
+
+            try
+            {
+                sendAccount = BankAccountList.ElementAt(send - 1);
+
+                if (money == 0)
+                {
+                    Console.Write("\n\tPlease enter a valid number.");
+                    Console.ReadLine();
+                }
+                else if (money < 0)
+                {
+                    money = 0;
+
+                    Console.Write("\n\tCan not send a negative amount.");
+                    Console.ReadLine();
+                }
+                else if (money <= sendAccount.Money)
+                {
+                    sendAccount.Money -= money;
+                    money = CurrencyConverter(sendAccount.CurrencyType, "Kr", money);
+                   
+                    Console.Write($"\n\tTransaction has been successful.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.Write($"\n\tInsufficent funds.");
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception)
+            {
+                Console.Write($"\n\tOne of the accounts you are trying to access does not exist.");
+                Console.ReadKey();
+            }
             return money;
         }
 
         //Method that recieves money from another user
         public void RecievMoney(decimal money)
         {
-            AccountDetails recievAccount = BankAccountList.ElementAt(0);
-            money = CurrencyConverter("Kr", recievAccount.CurrencyType, money);
-            recievAccount.Money += money;
+            try
+            {
+                AccountDetails recievAccount = BankAccountList.ElementAt(0);
+                money = CurrencyConverter("Kr", recievAccount.CurrencyType, money);
+                recievAccount.Money += money;
+            }
+            catch (Exception)
+            {
+                Console.Write($"\n\tThe recipent does not have an bankaccount.");
+                Console.ReadKey();
+            }
         }
     }
 }
