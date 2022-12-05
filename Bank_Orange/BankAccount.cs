@@ -19,24 +19,69 @@ namespace Bank_Orange
         {
             Console.Clear();
             Console.InputEncoding = Console.OutputEncoding = Encoding.Unicode;
-            int accountIndex = 1;
-            Console.Clear();
+
             foreach (var AccountDetails in BankAccountList)
             {
-                if (AccountDetails.CurrencyPosition == false)
+                if (AccountDetails.IsSavingsAccount == false)
                 {
-                    Console.Write($"\n\t[{accountIndex}]{AccountDetails.AccountName}: " +
-                        $"{AccountDetails.CurrencyType}{AccountDetails.Money:0.00} ");
+                    if (AccountDetails.CurrencyPosition == false)
+                    {
+                        Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
+                            $"{AccountDetails.CurrencyType}{AccountDetails.Money:0.00} ");
+                    }
+                    else
+                    {
+                        Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
+                            $"{AccountDetails.Money:0.00}{AccountDetails.CurrencyType} ");
+                    }
                 }
-                else 
-                {
-                    Console.Write($"\n\t[{accountIndex}]{AccountDetails.AccountName}: " +
-                        $"{AccountDetails.Money:0.00}{AccountDetails.CurrencyType} ");
-                }
-                accountIndex++;
             }
         }
+        public void DisplaySavingsInfo()
+        {
+            Console.Clear();
+            Console.InputEncoding = Console.OutputEncoding = Encoding.Unicode;
 
+            foreach (var AccountDetails in BankAccountList)
+            {
+                if (AccountDetails.IsSavingsAccount == true)
+                {
+                    if (AccountDetails.CurrencyPosition == false)
+                    {
+                        Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
+                            $"{AccountDetails.CurrencyType}{AccountDetails.Money:0.00} " +
+                            $"\n\tWith 8% interest, in 5 years you will have: {AccountDetails.Money * 1.08m * 1.08m * 1.08m * 1.08m * 1.08m:0.00}\n");
+                    }
+                    else
+                    {
+                        Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
+                            $"{AccountDetails.Money:0.00}{AccountDetails.CurrencyType} " +
+                            $"\n\tWith 8% interest, in 5 years you will have: {AccountDetails.Money * 1.08m * 1.08m * 1.08m * 1.08m * 1.08m:0.00}\n");
+                    }
+                }
+
+               
+            }
+        }
+        public void DisplayAllAccountInfo()
+        {
+            Console.Clear();
+            Console.InputEncoding = Console.OutputEncoding = Encoding.Unicode;
+
+            foreach (var AccountDetails in BankAccountList)
+            {
+                    if (AccountDetails.CurrencyPosition == false)
+                    {
+                    Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
+                        $"{AccountDetails.CurrencyType}{AccountDetails.Money:0.00}");
+                    }
+                    else
+                    {
+                    Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
+                        $"{AccountDetails.Money:0.00}{AccountDetails.CurrencyType}");
+                    }
+            }
+        }
         //Gets the current currencyExchange
         public void GetCurrencyExchanges(CurrencyExchanges newCurrencyExchanges)
         {
@@ -49,6 +94,30 @@ namespace Bank_Orange
             Console.Clear();
             bool currencyPosition;
 
+            Console.Write($"\n\tDo you want this to be an savings account or deposit account?" +
+                "\n\t[1] Deposit account" +
+                "\n\t[2] Savings account - Current interest rate is: 8%" +
+                "\n\t: ");
+            
+            int.TryParse(Console.ReadLine(), out int choice);
+
+            bool isSavingsAccount;
+            switch (choice)
+            {
+                case 1:
+                    isSavingsAccount = false;
+                    break;
+
+                case 2:
+                    isSavingsAccount = true;
+                    break;
+
+                default:
+                    isSavingsAccount = false;
+                    break;
+            }
+
+            
             Console.Write("\n\tName account: ");
             string accountName = Console.ReadLine();
 
@@ -81,9 +150,11 @@ namespace Bank_Orange
 
             Console.Write("\n\tMoney to deposit in sek: ");
             decimal.TryParse(Console.ReadLine(), out decimal money);
-            money = CurrencyConvertFromSek(currency, money);
 
-            AccountDetails newAccount = new AccountDetails(accountName, money, currency, currencyPosition);
+            money = CurrencyConvertFromSek(currency, money);
+            int accountIndex = BankAccountList.Count;
+            
+            AccountDetails newAccount = new AccountDetails(accountName, money, currency, currencyPosition, isSavingsAccount, accountIndex);
             BankAccountList.Add(newAccount);
         }
 
@@ -250,6 +321,20 @@ namespace Bank_Orange
                 Console.Write($"\n\tThe recipent does not have an bankaccount.");
                 Console.ReadKey();
             }
+        }
+        public void AddTestAccounts()
+        {
+            AccountDetails testAcc1 = new AccountDetails("A", 10000, "Kr", true, false, BankAccountList.Count);
+            BankAccountList.Add(testAcc1);
+
+            AccountDetails testAcc2 = new AccountDetails("B", 1000, "$", false, false, BankAccountList.Count);
+            BankAccountList.Add(testAcc2);
+
+            AccountDetails testAcc3 = new AccountDetails("C", 1000, "€", false, false, BankAccountList.Count);
+            BankAccountList.Add(testAcc3);
+
+            AccountDetails testAcc4 = new AccountDetails("D", 10000, "Kr", true, true, BankAccountList.Count);
+            BankAccountList.Add(testAcc4);
         }
     }
 }
