@@ -137,9 +137,10 @@ namespace Bank_Orange
             Console.Write($"\n\tYour index is {InLoggedUserIndex}");
             Console.Write("\n\t[1]Add new bank account" +
                 "\n\t[2]Show accounts" +
-                "\n\t[3]Move money" +
-                "\n\t[4]Send money" +
-                "\n\t[5]Logout" +
+                "\n\t[3]Show savings" +
+                "\n\t[4]Move money" +
+                "\n\t[5]Send money" +
+                "\n\t[6]Logout" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
@@ -154,14 +155,19 @@ namespace Bank_Orange
                     CustomerMenu();
                     break;
                 case 3:
-                    InLoggedUserAccount.DisplayAccountInfo();
-                    InLoggedUserAccount.TransfereMoneyinUser();
+                    InLoggedUserAccount.DisplaySavingsInfo();
+                    Console.ReadLine();
                     CustomerMenu();
                     break;
                 case 4:
-                    TransfereBetweenUsers();
+                    InLoggedUserAccount.DisplayAllAccountInfo();
+                    InLoggedUserAccount.TransfereMoneyinUser();
+                    CustomerMenu();
                     break;
                 case 5:
+                    TransfereBetweenUsers();
+                    break;
+                case 6:
                     Login();
                     break;
                 default:
@@ -196,7 +202,7 @@ namespace Bank_Orange
             }          
         }
 
-        //Method to transfere money between users
+        //Method to transfer money between users.
         public void TransfereBetweenUsers()
         {
             BankAccount receiver;
@@ -213,6 +219,27 @@ namespace Bank_Orange
                 }
             }
             CustomerMenu();
+        }
+        public void LoadTestUsers()
+        {
+            //For testing the program.
+            //Dummy users.
+            Customer testUser1 = new Customer("a","a");
+            BankAccount testAcc1 = new BankAccount();
+           
+            PersonDictionary.Add(PersonDictionary.Count, testUser1);
+            AccountDictionary.Add(AccountDictionary.Count, testAcc1);
+            testAcc1.GetCurrencyExchanges(currencyExchanges);
+
+            Customer testUser2 = new Customer("b","b");
+            BankAccount testAcc2 = new BankAccount();
+
+            PersonDictionary.Add(PersonDictionary.Count, testUser2);
+            AccountDictionary.Add(AccountDictionary.Count, testAcc2);
+            testAcc2.GetCurrencyExchanges(currencyExchanges);
+
+            testAcc1.AddTestAccounts();
+            testAcc2.AddTestAccounts();
         }
     }
 }

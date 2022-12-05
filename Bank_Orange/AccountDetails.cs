@@ -34,13 +34,18 @@ namespace Bank_Orange
             get { return currencyPosition; }
             set { currencyPosition = value; }
         }
+        public bool IsSavingsAccount { get; set; }
 
-        public AccountDetails(string accountName, decimal money, string currency, bool currencyPosition)
+        public int AccountIndex { get; set; }
+        public AccountDetails(string accountName, decimal money, string currency, bool currencyPosition, bool isSavingsAccount,
+            int accountIndex)
         {
             AccountName = accountName;
             Money = money;
             CurrencyType = currency;
             CurrencyPosition = currencyPosition;
+            IsSavingsAccount = isSavingsAccount;
+            AccountIndex = accountIndex;
         }             
     }
 }

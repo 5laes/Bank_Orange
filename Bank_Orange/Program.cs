@@ -15,6 +15,8 @@ namespace Bank_Orange
             CurrencyExchanges currencyExchanges = new CurrencyExchanges(10, 10);
             bankSystem.CreateAdmin();
             bankSystem.GetCurrencyExchanges(currencyExchanges);
+
+            bankSystem.LoadTestUsers();
             bankSystem.Login();
         }
     }
