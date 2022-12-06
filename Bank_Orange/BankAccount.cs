@@ -11,6 +11,8 @@ namespace Bank_Orange
         //For saving the exchangerate
         CurrencyExchanges currencyExchanges;
 
+        public bool CanTakeLoan = true;
+
         //A list of account details.
         private List<AccountDetails> BankAccountList = new List<AccountDetails>();
 
