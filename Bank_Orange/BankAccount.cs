@@ -336,5 +336,16 @@ namespace Bank_Orange
             AccountDetails testAcc4 = new AccountDetails("D", 10000, "Kr", true, true, BankAccountList.Count);
             BankAccountList.Add(testAcc4);
         }
+
+        public decimal TotalMoney()
+        {
+            decimal totalMoney = 0;
+            foreach (var item in BankAccountList)
+            {
+                decimal money = CurrencyConverter(item.CurrencyType, "Kr", item.Money);
+                totalMoney = totalMoney + money;
+            }
+            return totalMoney;
+        }
     }
 }

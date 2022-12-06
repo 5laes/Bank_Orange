@@ -140,7 +140,8 @@ namespace Bank_Orange
                 "\n\t[3]Show savings" +
                 "\n\t[4]Move money" +
                 "\n\t[5]Send money" +
-                "\n\t[6]Logout" +
+                "\n\t[6]Borrow money" +
+                "\n\t[7]Log out" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
@@ -168,6 +169,9 @@ namespace Bank_Orange
                     TransfereBetweenUsers();
                     break;
                 case 6:
+                    BorrowMoney();
+                    break;
+                case 7:
                     Login();
                     break;
                 default:
@@ -199,7 +203,7 @@ namespace Bank_Orange
                 default:
                     AdminMenu();
                     break;
-            }          
+            }
         }
 
         //Method to transfer money between users.
@@ -224,14 +228,14 @@ namespace Bank_Orange
         {
             //For testing the program.
             //Dummy users.
-            Customer testUser1 = new Customer("a","a");
+            Customer testUser1 = new Customer("a", "a");
             BankAccount testAcc1 = new BankAccount();
-           
+
             PersonDictionary.Add(PersonDictionary.Count, testUser1);
             AccountDictionary.Add(AccountDictionary.Count, testAcc1);
             testAcc1.GetCurrencyExchanges(currencyExchanges);
 
-            Customer testUser2 = new Customer("b","b");
+            Customer testUser2 = new Customer("b", "b");
             BankAccount testAcc2 = new BankAccount();
 
             PersonDictionary.Add(PersonDictionary.Count, testUser2);
@@ -240,6 +244,38 @@ namespace Bank_Orange
 
             testAcc1.AddTestAccounts();
             testAcc2.AddTestAccounts();
+        }
+
+        public void BorrowMoney()
+        {
+            Console.Clear();
+            Console.Write("\n\tHow much money would you like to borrow?" +
+                $"\n\tMax amount to borrow is {InLoggedUserAccount.TotalMoney() * 5:0.00}" +
+                $"\n\t: ");
+            decimal.TryParse(Console.ReadLine(), out decimal borrow);
+            if (borrow <= InLoggedUserAccount.TotalMoney() * 5)
+            {
+                Console.Write($"\n\tYou are eligible for this loan.\n\tYour yearly paid interest will be {borrow * 0.035m:0.00}kr!");
+                Console.Write("\n\tWould you like to complete the transfer?");
+                Console.Write("\n\t[1] Yes.\n\t[2] No" +
+                    "\n\t: ");
+                int.TryParse(Console.ReadLine(), out int userChoice);
+                if (userChoice == 1)
+                {
+                    InLoggedUserAccount.RecievMoney(borrow);
+                    Console.Write("\n\tTransfer Complete!");
+                }
+                else
+                {
+                    Console.Write("\n\tTransfer was cancelled!");
+                }
+            }
+            else
+            {
+                Console.Write("\n\tYou are not eligible for this loan!");
+            }
+            Console.ReadLine();
+            CustomerMenu();
         }
     }
 }
