@@ -169,7 +169,15 @@ namespace Bank_Orange
                     TransfereBetweenUsers();
                     break;
                 case 6:
-                    BorrowMoney();
+                    if (InLoggedUserAccount.CanTakeLoan == true)
+                    {
+                        BorrowMoney();
+                    }
+                    else
+                    {
+                        Console.Write("\n\tYou can only have max 1 loan! You currently have 1 loan.");
+                        Console.ReadLine();
+                    }
                     break;
                 case 7:
                     Login();
@@ -250,18 +258,23 @@ namespace Bank_Orange
         {
             Console.Clear();
             Console.Write("\n\tHow much money would you like to borrow?" +
-                $"\n\tMax amount to borrow is {InLoggedUserAccount.TotalMoney() * 5:0.00}" +
+                $"\n\tMax amount to borrow is {InLoggedUserAccount.TotalMoney() * 5:0.00} Kr" +
                 $"\n\t: ");
             decimal.TryParse(Console.ReadLine(), out decimal borrow);
-            if (borrow <= InLoggedUserAccount.TotalMoney() * 5)
+            if (borrow <= 0)
+            {
+                Console.Write("\n\tSomething went wrong, please try again.");
+            }
+            else if (borrow <= InLoggedUserAccount.TotalMoney() * 5)
             {
                 Console.Write($"\n\tYou are eligible for this loan.\n\tYour yearly paid interest will be {borrow * 0.035m:0.00}kr!");
-                Console.Write("\n\tWould you like to complete the transfer?");
-                Console.Write("\n\t[1] Yes.\n\t[2] No" +
+                Console.Write("\n\n\tWould you like to complete the transfer?");
+                Console.Write("\n\t[1] Yes\n\t[2] No" +
                     "\n\t: ");
                 int.TryParse(Console.ReadLine(), out int userChoice);
-                if (userChoice == 1)
+                if(userChoice == 1)
                 {
+                    InLoggedUserAccount.CanTakeLoan = false;
                     InLoggedUserAccount.RecievMoney(borrow);
                     Console.Write("\n\tTransfer Complete!");
                 }
