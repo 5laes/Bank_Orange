@@ -7,6 +7,10 @@ namespace Bank_Orange
 {
     class BankSystem
     {
+        PendingTransactions pendingTransactions;
+
+        Queue<PendingTransactions> pendingTransactionsQueue = new Queue<PendingTransactions>(); 
+
         //For saving the exchangerate
         CurrencyExchanges currencyExchanges;
 
@@ -222,12 +226,18 @@ namespace Bank_Orange
             int.TryParse(Console.ReadLine(), out int idKey);
             InLoggedUserAccount.DisplayAccountInfo();
             decimal money = InLoggedUserAccount.SendMoney();
+
+            //pendingTransactions = new PendingTransactions(InLoggedUserAccount, receiver, money);
+            //pendingTransactionsQueue.Enqueue(pendingTransactions);
+
             foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
             {
                 if (idKey == item.Key)
                 {
                     receiver = item.Value;
-                    receiver.RecievMoney(money);
+                    pendingTransactions = new PendingTransactions(receiver, money);
+                    pendingTransactionsQueue.Enqueue(pendingTransactions);
+                    //receiver.RecievMoney(money);
                 }
             }
             CustomerMenu();
@@ -289,6 +299,20 @@ namespace Bank_Orange
             }
             Console.ReadLine();
             CustomerMenu();
+        }
+
+        public void EmptyQueue()
+        {
+            {
+                if (DateTime.Now.Second == 00 || DateTime.Now.Second == 15 || DateTime.Now.Second == 30 || DateTime.Now.Second == 45)
+                {
+                    while (pendingTransactionsQueue.Count > 0)
+                    {
+                        PendingTransactions ongoingTransactions = pendingTransactionsQueue.Dequeue();
+                        ongoingTransactions.Receiver.RecievMoney(ongoingTransactions.Money);
+                    }
+                }
+            }
         }
     }
 }
