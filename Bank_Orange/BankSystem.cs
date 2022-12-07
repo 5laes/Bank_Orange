@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
@@ -7,8 +8,13 @@ namespace Bank_Orange
 {
     class BankSystem
     {
+        //for saving the new thread
+        Thread Thread;
+
+        //for saving the transactions
         PendingTransactions pendingTransactions;
 
+        //A queue with transactions
         Queue<PendingTransactions> pendingTransactionsQueue = new Queue<PendingTransactions>(); 
 
         //For saving the exchangerate
@@ -24,10 +30,25 @@ namespace Bank_Orange
         private Dictionary<int, Person> PersonDictionary = new Dictionary<int, Person>();
         private Dictionary<int, BankAccount> AccountDictionary = new Dictionary<int, BankAccount>();
 
+        //method that repeteadly checks calls EmptyQueue so that the queue will empty at the correct time
+        public void CheckTime()
+        {
+            EmptyQueue();
+            Thread.Sleep(1000);
+            CheckTime();
+        }
+
         //Gets the current currencyExchange
         public void GetCurrencyExchanges(CurrencyExchanges newCurrencyExchanges)
         {
             currencyExchanges = newCurrencyExchanges;
+        }
+
+        //Gets and start a new thread to check the time for transactions
+        public void StartNewThread(Thread thread)
+        {
+            Thread = thread;
+            Thread.Start();
         }
 
         //Login method thats saves the users index if a loggin is successfull.
@@ -242,10 +263,11 @@ namespace Bank_Orange
             }
             CustomerMenu();
         }
+
+        //For testing the program.
+        //Dummy users.
         public void LoadTestUsers()
         {
-            //For testing the program.
-            //Dummy users.
             Customer testUser1 = new Customer("a", "a");
             BankAccount testAcc1 = new BankAccount();
 
@@ -264,6 +286,7 @@ namespace Bank_Orange
             testAcc2.AddTestAccounts();
         }
 
+        //A user can only borrow from the bank once and a maximum of 5x their money
         public void BorrowMoney()
         {
             Console.Clear();
@@ -301,10 +324,11 @@ namespace Bank_Orange
             CustomerMenu();
         }
 
+        //method to empty the queue of transactions between users
         public void EmptyQueue()
         {
             {
-                if (DateTime.Now.Second == 00 || DateTime.Now.Second == 15 || DateTime.Now.Second == 30 || DateTime.Now.Second == 45)
+                if (DateTime.Now.Minute == 00 || DateTime.Now.Minute == 15 || DateTime.Now.Minute == 30 || DateTime.Now.Minute == 45)
                 {
                     while (pendingTransactionsQueue.Count > 0)
                     {

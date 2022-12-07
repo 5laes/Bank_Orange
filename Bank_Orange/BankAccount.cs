@@ -16,7 +16,7 @@ namespace Bank_Orange
         //A list of account details.
         private List<AccountDetails> BankAccountList = new List<AccountDetails>();
 
-        //Displays all the accounts that a user has and the information in them.
+        //Displays all the regular accounts that a user has and the information in them.
         public void DisplayAccountInfo()
         {
             Console.Clear();
@@ -39,6 +39,8 @@ namespace Bank_Orange
                 }
             }
         }
+
+        //Displays all the savings accounts that a user has and the information in them.
         public void DisplaySavingsInfo()
         {
             Console.Clear();
@@ -65,6 +67,8 @@ namespace Bank_Orange
                
             }
         }
+
+        //Displays all the accounts that a user has and the information in them.
         public void DisplayAllAccountInfo()
         {
             Console.Clear();
@@ -84,6 +88,7 @@ namespace Bank_Orange
                     }
             }
         }
+
         //Gets the current currencyExchange
         public void GetCurrencyExchanges(CurrencyExchanges newCurrencyExchanges)
         {
@@ -324,6 +329,8 @@ namespace Bank_Orange
                 Console.ReadKey();
             }
         }
+
+        //for testing
         public void AddTestAccounts()
         {
             AccountDetails testAcc1 = new AccountDetails("A", 10000, "Kr", true, false, BankAccountList.Count);
@@ -339,6 +346,7 @@ namespace Bank_Orange
             BankAccountList.Add(testAcc4);
         }
 
+        //Gets the total ammount of money a users has on all the accounts
         public decimal TotalMoney()
         {
             decimal totalMoney = 0;

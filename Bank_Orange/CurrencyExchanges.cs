@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Bank_Orange
 {
+    //Class for saving/editing currency exchanges
     class CurrencyExchanges
     {
         public decimal SekMultiplierFromEuro;
