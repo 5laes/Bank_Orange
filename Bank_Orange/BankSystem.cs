@@ -8,9 +8,6 @@ namespace Bank_Orange
 {
     class BankSystem
     {
-        //for saving the new thread
-        Thread Thread;
-
         //for saving the transactions
         PendingTransactions pendingTransactions;
 
@@ -42,13 +39,6 @@ namespace Bank_Orange
         public void GetCurrencyExchanges(CurrencyExchanges newCurrencyExchanges)
         {
             currencyExchanges = newCurrencyExchanges;
-        }
-
-        //Gets and start a new thread to check the time for transactions
-        public void StartNewThread(Thread thread)
-        {
-            Thread = thread;
-            Thread.Start();
         }
 
         //Login method thats saves the users index if a loggin is successfull.
@@ -328,7 +318,7 @@ namespace Bank_Orange
         public void EmptyQueue()
         {
             {
-                if (DateTime.Now.Minute == 00 || DateTime.Now.Minute == 15 || DateTime.Now.Minute == 30 || DateTime.Now.Minute == 45)
+                if (DateTime.Now.Second == 00)
                 {
                     while (pendingTransactionsQueue.Count > 0)
                     {

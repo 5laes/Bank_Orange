@@ -16,7 +16,7 @@ namespace Bank_Orange
             CurrencyExchanges currencyExchanges = new CurrencyExchanges(10, 10);
             Thread thread = new Thread(new ThreadStart(bankSystem.CheckTime));
             bankSystem.CreateAdmin();
-            bankSystem.StartNewThread(thread);
+            thread.Start();
             bankSystem.GetCurrencyExchanges(currencyExchanges);
             bankSystem.LoadTestUsers();
             bankSystem.Login();
