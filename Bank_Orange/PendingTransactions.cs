@@ -6,5 +6,6 @@ namespace Bank_Orange
 {
     internal class PendingTransactions
     {
+
     }
 }
