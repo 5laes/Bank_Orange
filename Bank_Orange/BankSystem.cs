@@ -30,9 +30,11 @@ namespace Bank_Orange
         //method that repeteadly checks calls EmptyQueue so that the queue will empty at the correct time
         public void CheckTime()
         {
-            EmptyQueue();
-            Thread.Sleep(1000);
-            CheckTime();
+            while (true)
+            {
+                EmptyQueue();
+                Thread.Sleep(500);
+            }
         }
 
         //Gets the current currencyExchange
@@ -124,6 +126,7 @@ namespace Bank_Orange
 
             BankAccount newBankAccount = new BankAccount();
             newBankAccount.GetCurrencyExchanges(currencyExchanges);
+            newBankAccount.AccountCreationLog();
             AccountDictionary.Add(AccountDictionary.Count, newBankAccount);
 
             AdminMenu();
@@ -156,7 +159,8 @@ namespace Bank_Orange
                 "\n\t[4]Move money" +
                 "\n\t[5]Send money" +
                 "\n\t[6]Borrow money" +
-                "\n\t[7]Log out" +
+                "\n\t[7]Show Log" +
+                "\n\t[8]Log out" +
                 "\n\t: ");
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
@@ -195,6 +199,10 @@ namespace Bank_Orange
                     }
                     break;
                 case 7:
+                    InLoggedUserAccount.DisplayLogHistory();
+                    CustomerMenu();
+                    break;
+                case 8:
                     Login();
                     break;
                 default:
@@ -236,19 +244,15 @@ namespace Bank_Orange
             Console.Write("\n\tInput recipient ID: ");
             int.TryParse(Console.ReadLine(), out int idKey);
             InLoggedUserAccount.DisplayAccountInfo();
-            decimal money = InLoggedUserAccount.SendMoney();
-
-            //pendingTransactions = new PendingTransactions(InLoggedUserAccount, receiver, money);
-            //pendingTransactionsQueue.Enqueue(pendingTransactions);
+            decimal money = InLoggedUserAccount.SendMoney(idKey);
 
             foreach (KeyValuePair<int, BankAccount> item in AccountDictionary)
             {
                 if (idKey == item.Key)
                 {
                     receiver = item.Value;
-                    pendingTransactions = new PendingTransactions(receiver, money);
+                    pendingTransactions = new PendingTransactions(receiver, money, InLoggedUserIndex);
                     pendingTransactionsQueue.Enqueue(pendingTransactions);
-                    //receiver.RecievMoney(money);
                 }
             }
             CustomerMenu();
@@ -298,7 +302,7 @@ namespace Bank_Orange
                 if(userChoice == 1)
                 {
                     InLoggedUserAccount.CanTakeLoan = false;
-                    InLoggedUserAccount.RecievMoney(borrow);
+                    InLoggedUserAccount.RecievMoney(borrow, -1);
                     Console.Write("\n\tTransfer Complete!");
                 }
                 else
@@ -323,7 +327,7 @@ namespace Bank_Orange
                     while (pendingTransactionsQueue.Count > 0)
                     {
                         PendingTransactions ongoingTransactions = pendingTransactionsQueue.Dequeue();
-                        ongoingTransactions.Receiver.RecievMoney(ongoingTransactions.Money);
+                        ongoingTransactions.Receiver.RecievMoney(ongoingTransactions.Money, ongoingTransactions.SenderID);
                     }
                 }
             }
