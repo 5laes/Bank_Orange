@@ -16,6 +16,8 @@ namespace Bank_Orange
         //A list of account details.
         private List<AccountDetails> BankAccountList = new List<AccountDetails>();
 
+        private List<string> LogList = new List<string>();
+
         //Displays all the regular accounts that a user has and the information in them.
         public void DisplayAccountInfo()
         {
@@ -72,7 +74,6 @@ namespace Bank_Orange
         public void DisplayAllAccountInfo()
         {
             Console.Clear();
-            Console.InputEncoding = Console.OutputEncoding = Encoding.Unicode;
 
             foreach (var AccountDetails in BankAccountList)
             {
@@ -163,6 +164,9 @@ namespace Bank_Orange
             
             AccountDetails newAccount = new AccountDetails(accountName, money, currency, currencyPosition, isSavingsAccount, accountIndex);
             BankAccountList.Add(newAccount);
+
+            string Log = $"{DateTime.Now}: You created an account named {accountName} and deposited {money} in {currency}";
+            LogList.Add(Log);
         }
 
         //Converts currencies from sek to dollar/euro when a account is created.
@@ -246,10 +250,14 @@ namespace Bank_Orange
                 else if (money <= withdrawlAccount.Money)
                 {
                     withdrawlAccount.Money -= money;
-                    money = CurrencyConverter(withdrawlAccount.CurrencyType, depossitAccount.CurrencyType, money);
-                    depossitAccount.Money += money;
+                    //money = CurrencyConverter(withdrawlAccount.CurrencyType, depossitAccount.CurrencyType, money);
+                    depossitAccount.Money += CurrencyConverter(withdrawlAccount.CurrencyType, depossitAccount.CurrencyType, money);
 
                     Console.Write($"\n\tTransaction has been successful.");
+
+                    string log = $"{DateTime.Now}: You transfered {money} in {withdrawlAccount.CurrencyType} from {withdrawlAccount.AccountName} " +
+                        $"to {depossitAccount.AccountName}";
+                    LogList.Add(log);
                     Console.ReadLine();
                 }
                 else
@@ -266,7 +274,7 @@ namespace Bank_Orange
         }
 
         //Method that return the ammount of money a user wants to send to another user
-        public decimal SendMoney()
+        public decimal SendMoney(int receiverID)
         {
             Console.Write("\n\tWhat account do you want to send from: ");
             int.TryParse(Console.ReadLine(), out int send);
@@ -298,6 +306,9 @@ namespace Bank_Orange
                     money = CurrencyConverter(sendAccount.CurrencyType, "Kr", money);
                    
                     Console.Write($"\n\tTransaction has been successful.");
+
+                    string log = $"{DateTime.Now}: You sent {money} in {sendAccount.CurrencyType} to a bank account with the bank ID {receiverID} at";
+                    LogList.Add(log);
                     Console.ReadKey();
                 }
                 else
@@ -315,13 +326,25 @@ namespace Bank_Orange
         }
 
         //Method that recieves money from another user
-        public void RecievMoney(decimal money)
+        public void RecievMoney(decimal money, int senderID)
         {
             try
             {
                 AccountDetails recievAccount = BankAccountList.ElementAt(0);
                 money = CurrencyConverter("Kr", recievAccount.CurrencyType, money);
                 recievAccount.Money += money;
+
+                string log;
+                if (senderID == -1)
+                {
+                    log = $"{DateTime.Now}: You made a loan of {money} in {recievAccount.CurrencyType}";
+                    LogList.Add(log); 
+                }
+                else
+                {
+                    log = $"{DateTime.Now}: You received {money} in {recievAccount.CurrencyType} from bank ID {senderID}";
+                    LogList.Add(log);
+                }
             }
             catch (Exception)
             {
@@ -356,6 +379,22 @@ namespace Bank_Orange
                 totalMoney = totalMoney + money;
             }
             return totalMoney;
+        }
+
+        public void AccountCreationLog()
+        {
+            string creation = $"{DateTime.Now}: Your account was created";
+            LogList.Add(creation);
+        }
+
+        public void DisplayLogHistory()
+        {
+            Console.Clear();
+            foreach (var item in LogList)
+            {
+                Console.Write($"\n\t{item}.");
+            }
+            Console.ReadLine();
         }
     }
 }

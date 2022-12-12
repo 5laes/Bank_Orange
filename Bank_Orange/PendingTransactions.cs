@@ -9,11 +9,13 @@ namespace Bank_Orange
     {
         public BankAccount Receiver;
         public decimal Money;
+        public int SenderID;
 
-        public PendingTransactions(BankAccount receiver, decimal money)
+        public PendingTransactions(BankAccount receiver, decimal money, int senderID)
         {
             Receiver = receiver;
             Money = money;
+            SenderID = senderID;
         }
     }
 }
