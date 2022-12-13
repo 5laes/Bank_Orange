@@ -31,12 +31,12 @@ namespace Bank_Orange
                     if (AccountDetails.CurrencyPosition == false)
                     {
                         Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
-                            $"{AccountDetails.CurrencyType}{CurrencyTest(AccountDetails.Money)} ");
+                            $"{AccountDetails.CurrencyType}{CurrencyFormat(AccountDetails.Money)} ");
                     }
                     else
                     {
                         Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
-                            $"{CurrencyTest(AccountDetails.Money)}{AccountDetails.CurrencyType} ");
+                            $"{CurrencyFormat(AccountDetails.Money)}{AccountDetails.CurrencyType} ");
                     }
                 }
             }
@@ -55,13 +55,13 @@ namespace Bank_Orange
                     if (AccountDetails.CurrencyPosition == false)
                     {
                         Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
-                            $"{AccountDetails.CurrencyType}{CurrencyTest(AccountDetails.Money)} " +
+                            $"{AccountDetails.CurrencyType}{CurrencyFormat(AccountDetails.Money)} " +
                             $"\n\tWith 8% interest, in 5 years you will have: {AccountDetails.Money * 1.08m * 1.08m * 1.08m * 1.08m * 1.08m:0.00}\n");
                     }
                     else
                     {
                         Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
-                            $"{CurrencyTest(AccountDetails.Money)}{AccountDetails.CurrencyType} " +
+                            $"{CurrencyFormat(AccountDetails.Money)}{AccountDetails.CurrencyType} " +
                             $"\n\tWith 8% interest, in 5 years you will have: {AccountDetails.Money * 1.08m * 1.08m * 1.08m * 1.08m * 1.08m:0.00}\n");
                     }
                 }
@@ -80,12 +80,12 @@ namespace Bank_Orange
                     if (AccountDetails.CurrencyPosition == false)
                     {
                     Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
-                        $"{AccountDetails.CurrencyType}{CurrencyTest(AccountDetails.Money)}");
+                        $"{AccountDetails.CurrencyType}{CurrencyFormat(AccountDetails.Money)}");
                     }
                     else
                     {
                     Console.Write($"\n\t[{AccountDetails.AccountIndex + 1}]{AccountDetails.AccountName}: " +
-                        $"{CurrencyTest(AccountDetails.Money)}{AccountDetails.CurrencyType}");
+                        $"{CurrencyFormat(AccountDetails.Money)}{AccountDetails.CurrencyType}");
                     }
             }
         }
@@ -165,7 +165,7 @@ namespace Bank_Orange
             AccountDetails newAccount = new AccountDetails(accountName, money, currency, currencyPosition, isSavingsAccount, accountIndex);
             BankAccountList.Add(newAccount);
 
-            string Log = $"{DateTime.Now}: You created an account named {accountName} and deposited {CurrencyTest(money)} in {currency}";
+            string Log = $"{DateTime.Now}: You created an account named {accountName} and deposited {CurrencyFormat(money)} in {currency}";
             LogList.Add(Log);
         }
 
@@ -255,7 +255,7 @@ namespace Bank_Orange
 
                     Console.Write($"\n\tTransaction has been successful.");
 
-                    string log = $"{DateTime.Now}: You transfered {CurrencyTest(money)} in {withdrawlAccount.CurrencyType} from {withdrawlAccount.AccountName} " +
+                    string log = $"{DateTime.Now}: You transfered {CurrencyFormat(money)} in {withdrawlAccount.CurrencyType} from {withdrawlAccount.AccountName} " +
                         $"to {depossitAccount.AccountName}";
                     LogList.Add(log);
                     Console.ReadLine();
@@ -307,7 +307,7 @@ namespace Bank_Orange
                    
                     Console.Write($"\n\tTransaction has been successful.");
 
-                    string log = $"{DateTime.Now}: You sent {CurrencyTest(money)} in {sendAccount.CurrencyType} to a bank account with the bank ID {receiverID} at";
+                    string log = $"{DateTime.Now}: You sent {CurrencyFormat(money)} in {sendAccount.CurrencyType} to a bank account with the bank ID {receiverID} at";
                     LogList.Add(log);
                     Console.ReadKey();
                 }
@@ -337,12 +337,12 @@ namespace Bank_Orange
                 string log;
                 if (senderID == -1)
                 {
-                    log = $"{DateTime.Now}: You made a loan of {CurrencyTest(money)} in {recievAccount.CurrencyType}";
+                    log = $"{DateTime.Now}: You made a loan of {CurrencyFormat(money)} in {recievAccount.CurrencyType}";
                     LogList.Add(log); 
                 }
                 else
                 {
-                    log = $"{DateTime.Now}: You received {CurrencyTest(money)} in {recievAccount.CurrencyType} from bank ID {senderID}";
+                    log = $"{DateTime.Now}: You received {CurrencyFormat(money)} in {recievAccount.CurrencyType} from bank ID {senderID}";
                     LogList.Add(log);
                 }
             }
@@ -396,7 +396,7 @@ namespace Bank_Orange
             }
             Console.ReadLine();
         }
-        public static string CurrencyTest(decimal d)
+        public static string CurrencyFormat(decimal d)
         {
             string test = d.ToString("C");
 

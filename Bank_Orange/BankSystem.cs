@@ -334,7 +334,7 @@ namespace Bank_Orange
         {
             Console.Clear();
             Console.Write("\n\tHow much money would you like to borrow?" +
-                $"\n\tMax amount to borrow is {BankAccount.CurrencyTest(InLoggedUserAccount.TotalMoney() * 5)} Kr" +
+                $"\n\tMax amount to borrow is {BankAccount.CurrencyFormat(InLoggedUserAccount.TotalMoney() * 5)} Kr" +
                 $"\n\t: ");
             decimal.TryParse(Console.ReadLine(), out decimal borrow);
             if (borrow <= 0)
@@ -343,7 +343,7 @@ namespace Bank_Orange
             }
             else if (borrow <= InLoggedUserAccount.TotalMoney() * 5)
             {
-                Console.Write($"\n\tYou are eligible for this loan.\n\tYour yearly paid interest will be {BankAccount.CurrencyTest(borrow * 0.035m)}kr!");
+                Console.Write($"\n\tYou are eligible for this loan.\n\tYour yearly paid interest will be {BankAccount.CurrencyFormat(borrow * 0.035m)}kr!");
                 Console.Write("\n\n\tWould you like to complete the transfer?");
                 Console.Write("\n\t[1] Yes\n\t[2] No" +
                     "\n\t: ");
