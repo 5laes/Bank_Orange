@@ -51,7 +51,15 @@ namespace Bank_Orange
                 if (Attempts < 3)
                 {
                     Console.Clear();
-
+                    Console.Write($"" +
+                        $"\n\t,-----.                  ,--.         ,-----.                                       " +
+                        $"\n\t|  |) /_  ,--,--.,--,--, |  |,-.     '  .-.  ',--.--. ,--,--.,--,--,  ,---.  ,---.  " +
+                        $"\n\t|  .-.  \\' ,-.  ||      \\|     /     |  | |  ||  .--'' ,-.  ||      \\| .-. || .-. : " +
+                        $"\n\t|  '--' /\\ '-'  ||  ||  ||  \\  \\     '  '-'  '|  |   \\ '-'  ||  ||  |' '-' '\\   --. " +
+                        $"\n\t`------'  `--`--'`--''--'`--'`--'     `-----' `--'    `--`--'`--''--'.`-  /  `----' " +
+                        $"\n\t                                                                     `---'          " +
+                        $"\n\t______________________________________________________________________________________" +
+                        $"\n\t");
                     Console.Write("\n\tEnter Your Username: ");
                     string Name = Console.ReadLine();
 
@@ -136,15 +144,15 @@ namespace Bank_Orange
         public void ChangeExchageRate()
         {
             Console.Write("\n\tCurrent exchange rate: " +
-                $"Euro {currencyExchanges.SekMultiplierFromEuro} Dollar {currencyExchanges.SekMultiplierFromDollar}");
+                $"Euro {currencyExchanges.EuroCurrencyRate} Dollar {currencyExchanges.DollarCurrencyRate}");
 
             Console.Write("\n\tWhats todays exchage rate for Dollar: ");
             decimal.TryParse(Console.ReadLine(), out decimal RateDollar);
-            currencyExchanges.SekMultiplierFromDollar = RateDollar;
+            currencyExchanges.DollarCurrencyRate = RateDollar;
 
             Console.Write("\n\tWhats todays exchage rate for Euro: ");
             decimal.TryParse(Console.ReadLine(), out decimal RateEuro);
-            currencyExchanges.SekMultiplierFromEuro = RateEuro;
+            currencyExchanges.EuroCurrencyRate = RateEuro;
             AdminMenu();
         }
 
@@ -152,16 +160,27 @@ namespace Bank_Orange
         public void CustomerMenu()
         {
             Console.Clear();
-            Console.Write($"\n\tYour index is {InLoggedUserIndex}");
-            Console.Write("\n\t[1]Add new bank account" +
-                "\n\t[2]Show accounts" +
-                "\n\t[3]Show savings" +
-                "\n\t[4]Move money" +
-                "\n\t[5]Send money" +
-                "\n\t[6]Borrow money" +
-                "\n\t[7]Show Log" +
-                "\n\t[8]Log out" +
-                "\n\t: ");
+            Console.Write($"" +
+                $"\n\t   ______________________________" +
+                $"\n\t / \\                             \\." +
+                $"\n\t|   | [1]Add new bank account    |." +
+                $"\n\t \\_ | [2]Show accounts           |." +
+                $"\n\t    | [3]Show savings            |." +
+                $"\n\t    | [4]Move money              |." +
+                $"\n\t    | [5]Send money              |." +
+                $"\n\t    | [6]Borrow money            |." +
+                $"\n\t    | [7]Show Log                |." +
+                $"\n\t    | [8]Log out                 |." +
+                $"\n\t    |                            |." +
+                $"\n\t    | Your account ID is {InLoggedUserIndex}       |." +
+                $"\n\t    |                            |." +
+                $"\n\t    |                            |." +
+                $"\n\t    |                            |." +
+                $"\n\t    |   _________________________|___" +
+                $"\n\t    |  /                            /." +
+                $"\n\t    \\_/BO__________________________/." +
+                $"\n\n\b\t\t:");
+
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
             {
@@ -215,10 +234,39 @@ namespace Bank_Orange
         public void AdminMenu()
         {
             Console.Clear();
-            Console.Write("\n\t[1]Create account" +
-                "\n\t[2]Change currency rate" +
-                "\n\t[3]Logout" +
-                "\n\t: ");
+            //Console.Write("\n\t[1]Create account" +
+            //    "\n\t[2]Change currency rate" +
+            //    "\n\t[3]Logout" +
+            //    "\n\t: ");
+            Console.Write($"\t             ____________________________________________________" +
+                $"\n\t            /                                                    \\" +
+                $"\n\t           |    _____________________________________________     |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |  C:\\secret\\admin_settings> _                |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |  [1]Create account                          |    |" +
+                $"\n\t           |   |  [2]Change currency rate                    |    |" +
+                $"\n\t           |   |  [3]Logout                                  |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |                                             |    |" +
+                $"\n\t           |   |_____________________________________________|    |" +
+                $"\n\t           |                        Atari                         |" +
+                $"\n\t            \\_____________________________________________________/" +
+                $"\n\t                   \\_______________________________________/" +
+                $"\n\t                _______________________________________________" +
+                $"\n\t             _-'    .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.  --- `-" +
+                $"\n\t          _-'.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.--.  .-.-.`-_" +
+                $"\n\t       _-'.-.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-`__`. .-.-.-.`-_" +
+                $"\n\t    _-'.-.-.-.-. .-----.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-----. .-.-.-.-.`-" +
+                $"\n\t    _-'.-.-.-.-. .-----.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-----. .-.-.-.-.`-_" +
+                $"\n\t:-----------------------------------------------------------------------------:" +
+                $"\n\t`---._.-----------------------------------------------------------------._.---'" +
+                $"\n\t\t\t:");
+
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
             {
@@ -226,6 +274,7 @@ namespace Bank_Orange
                     CreateUserAccount();
                     break;
                 case 2:
+                    Console.Clear();
                     ChangeExchageRate();
                     break;
                 case 3:

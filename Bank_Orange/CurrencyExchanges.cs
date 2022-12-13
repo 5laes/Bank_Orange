@@ -7,13 +7,13 @@ namespace Bank_Orange
     //Class for saving/editing currency exchanges
     class CurrencyExchanges
     {
-        public decimal SekMultiplierFromEuro;
-        public decimal SekMultiplierFromDollar;
+        public decimal EuroCurrencyRate;
+        public decimal DollarCurrencyRate;
 
         public CurrencyExchanges(decimal euro, decimal dollar)
         {
-            SekMultiplierFromEuro = euro;
-            SekMultiplierFromDollar = dollar;
+            EuroCurrencyRate = euro;
+            DollarCurrencyRate = dollar;
         }
     }
 }

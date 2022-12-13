@@ -174,11 +174,11 @@ namespace Bank_Orange
         {
             if (currency == "$")
             {
-                return money /= currencyExchanges.SekMultiplierFromDollar;
+                return money /= currencyExchanges.DollarCurrencyRate;
             }
             if (currency == "€")
             {
-                return money /= currencyExchanges.SekMultiplierFromEuro;
+                return money /= currencyExchanges.EuroCurrencyRate;
             }
             return money;
         }
@@ -188,29 +188,29 @@ namespace Bank_Orange
         {
             if (currencyFrom == "$" && currencyTo == "€")
             {
-                money *= currencyExchanges.SekMultiplierFromDollar;
-                return money /= currencyExchanges.SekMultiplierFromEuro;
+                money *= currencyExchanges.DollarCurrencyRate;
+                return money /= currencyExchanges.EuroCurrencyRate;
             }
             if (currencyFrom == "€" && currencyTo == "$")
             {
-                money *= currencyExchanges.SekMultiplierFromEuro;
-                return money /= currencyExchanges.SekMultiplierFromDollar;
+                money *= currencyExchanges.EuroCurrencyRate;
+                return money /= currencyExchanges.DollarCurrencyRate;
             }
             if (currencyFrom == "Kr" && currencyTo == "€")
             {
-                return money /= currencyExchanges.SekMultiplierFromEuro;
+                return money /= currencyExchanges.EuroCurrencyRate;
             }
             if (currencyFrom == "Kr" && currencyTo == "$")
             {
-                return money /= currencyExchanges.SekMultiplierFromDollar;
+                return money /= currencyExchanges.DollarCurrencyRate;
             }
             if (currencyFrom == "€" && currencyTo == "Kr")
             {
-                return money *= currencyExchanges.SekMultiplierFromEuro;
+                return money *= currencyExchanges.EuroCurrencyRate;
             }
             if (currencyFrom == "$" && currencyTo == "Kr")
             {
-                return money *= currencyExchanges.SekMultiplierFromDollar;
+                return money *= currencyExchanges.DollarCurrencyRate;
             }
             return money;
         }
