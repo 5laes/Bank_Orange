@@ -215,6 +215,7 @@ namespace Bank_Orange
                     {
                         Console.Write("\n\tYou can only have max 1 loan! You currently have 1 loan.");
                         Console.ReadLine();
+                        CustomerMenu();
                     }
                     break;
                 case 7:
