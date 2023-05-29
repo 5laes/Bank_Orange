@@ -6,17 +6,17 @@ using System.Xml.Serialization;
 
 namespace Bank_Orange
 {
-    class BankAccount
+    public class BankAccount
     {
         //For saving the exchangerate
-        CurrencyExchanges currencyExchanges;
+        public CurrencyExchanges currencyExchanges;
 
         public bool CanTakeLoan = true;
 
         //A list of account details.
-        private List<AccountDetails> BankAccountList = new List<AccountDetails>();
+        public List<AccountDetails> BankAccountList = new List<AccountDetails>();
 
-        private List<string> LogList = new List<string>();
+        public List<string> LogList = new List<string>();
 
         //Displays all the regular accounts that a user has and the information in them.
         public void DisplayAccountInfo()
@@ -99,7 +99,7 @@ namespace Bank_Orange
         //Creates a new account with specific name and currency.
         public void AddNewBankAccount()
         {
-            Console.Clear();
+            //Console.Clear();
             bool currencyPosition;
 
             Console.Write($"\n\tDo you want this to be an savings account or deposit account?" +
@@ -389,7 +389,7 @@ namespace Bank_Orange
 
         public void DisplayLogHistory()
         {
-            Console.Clear();
+            //Console.Clear();
             foreach (var item in LogList)
             {
                 Console.Write($"\n\t{item}.");

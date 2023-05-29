@@ -5,7 +5,7 @@ using System.Text;
 namespace Bank_Orange
 {
     //Class for saving/editing currency exchanges
-    class CurrencyExchanges
+    public class CurrencyExchanges
     {
         public decimal EuroCurrencyRate;
         public decimal DollarCurrencyRate;

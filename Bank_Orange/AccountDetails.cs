@@ -5,7 +5,7 @@ using System.Text;
 namespace Bank_Orange
 {
     //A class for account details such as name, currencytype ammount of money in account.
-    class AccountDetails
+    public class AccountDetails
     {
         private string accountName;
         public string AccountName
